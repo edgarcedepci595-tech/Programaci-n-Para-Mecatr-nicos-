@@ -1,0 +1,170 @@
+/******************************************************************************/
+/*                 Programacion para mecatronicos                            */
+/*  Nombre:    Edgar Yosmar Carrero Peguero                                  */
+/*  Matricula: 2026-0267                                                     */
+/*  Seccion:   Miercoles                                                     */
+/*  Practica:  Parcial no 1                                                  */
+/*  Fecha:     06/10/2026                                                    */
+/*  Link Practica: https://github.com/edgarcedepci595-tech/Programaci-n-Para-Mecatr-nicos-.git */
+/******************************************************************************/
+
+#include <stdio.h>
+
+#define MAX 30
+
+/******************************************************************************
+ * @brief Funcion principal del Reto 15. Lee una matriz de raciones servidas,
+ *        valida los datos, detecta eventos por encima del promedio de su fila,
+ *        calcula impactos, rachas, resumen por columnas y la fila prioritaria.
+ *
+ * @param[in] argc Cantidad de argumentos de la linea de comandos. No se utiliza
+ *                 para resolver el reto.
+ * @param[in] argv Vector de argumentos de la linea de comandos. No se utiliza
+ *                 para resolver el reto.
+ *
+ * @return Devuelve 0 al finalizar el programa, incluso cuando la entrada es
+ *         invalida y se imprime ERROR como exige el enunciado.
+ *
+ * @Pass/Fail criteria: La salida debe coincidir exactamente con el formato
+ *                      solicitado para cada caso de prueba.
+ ******************************************************************************/
+int main(int argc, char *argv[])
+{
+    int N, M, L, U;
+    int matriz[MAX][MAX];
+    int eventosFila[MAX] = {0};
+    int rachaMax[MAX] = {0};
+    int inicioRacha[MAX] = {0};
+    int eventosColumna[MAX] = {0};
+    long impactoFila[MAX] = {0};
+    int i, j;
+    int totalEventos = 0;
+    int filaPrioritaria = 0;
+    int columnaDestacada = 0;
+
+    /* Los argumentos no forman parte de la entrada del problema. */
+    (void)argc;
+    (void)argv;
+
+    /* Lee N, M, L y U. No se imprimen preguntas ni mensajes adicionales. */
+    if (scanf("%d %d %d %d", &N, &M, &L, &U) != 4) {
+        printf("ERROR\n");
+        return 0;
+    }
+
+    /* Las dimensiones se validan antes de intentar leer la matriz. */
+    if (N < 1 || N > MAX || M < 1 || M > MAX) {
+        printf("ERROR\n");
+        return 0;
+    }
+
+    /* Valida los limites de la regla: 0 <= L <= U <= 1000. */
+    if (L < 0 || U < 0 || L > U || U > 1000) {
+        printf("ERROR\n");
+        return 0;
+    }
+
+    /* Lee y valida cada valor de la matriz sin modificar los datos originales. */
+    for (i = 0; i < N; i++) {
+        for (j = 0; j < M; j++) {
+            if (scanf("%d", &matriz[i][j]) != 1 ||
+                matriz[i][j] < 0 || matriz[i][j] > 1000) {
+                printf("ERROR\n");
+                return 0;
+            }
+        }
+    }
+
+    /*
+     * Recorre cada fila. Primero obtiene SF (suma de la fila) porque la regla
+     * de evento compara cada x contra el promedio de su propia fila sin dividir.
+     */
+    for (i = 0; i < N; i++) {
+        long SF = 0;
+        int rachaActual = 0;
+        int inicioActual = 0;
+
+        for (j = 0; j < M; j++) {
+            SF += matriz[i][j];
+        }
+
+        for (j = 0; j < M; j++) {
+            long x = matriz[i][j];
+
+            /* Regla exacta: M*x-SF >= M*L && x >= U. */
+            if ((long)M * x - SF >= (long)M * L && x >= U) {
+                long impacto = (long)M * x - SF + 1;
+
+                eventosFila[i]++;
+                impactoFila[i] += impacto;
+                eventosColumna[j]++;
+                totalEventos++;
+
+                /* Inicia o extiende una racha horizontal de eventos. */
+                if (rachaActual == 0) {
+                    inicioActual = j + 1; /* La salida usa indices desde 1. */
+                }
+                rachaActual++;
+
+                /* Solo se reemplaza si es mayor; asi se conserva el inicio mas temprano. */
+                if (rachaActual > rachaMax[i]) {
+                    rachaMax[i] = rachaActual;
+                    inicioRacha[i] = inicioActual;
+                }
+            } else {
+                /* Una posicion sin evento corta la racha actual. */
+                rachaActual = 0;
+            }
+        }
+    }
+
+    /*
+     * Si existe al menos un evento, selecciona la fila prioritaria usando,
+     * en este orden: mayor racha, mayor impacto, mayor cantidad de eventos y,
+     * en empate total, la menor fila (se conserva por recorrer de menor a mayor).
+     */
+    if (totalEventos > 0) {
+        filaPrioritaria = 0;
+
+        for (i = 1; i < N; i++) {
+            if (rachaMax[i] > rachaMax[filaPrioritaria] ||
+                (rachaMax[i] == rachaMax[filaPrioritaria] &&
+                 impactoFila[i] > impactoFila[filaPrioritaria]) ||
+                (rachaMax[i] == rachaMax[filaPrioritaria] &&
+                 impactoFila[i] == impactoFila[filaPrioritaria] &&
+                 eventosFila[i] > eventosFila[filaPrioritaria])) {
+                filaPrioritaria = i;
+            }
+        }
+
+        /* La columna con mas eventos gana; en empate queda la de menor numero. */
+        columnaDestacada = 0;
+        for (j = 1; j < M; j++) {
+            if (eventosColumna[j] > eventosColumna[columnaDestacada]) {
+                columnaDestacada = j;
+            }
+        }
+    }
+
+    /* Salida exacta solicitada por el enunciado. */
+    for (i = 0; i < N; i++) {
+        printf("FILA %d EVENTOS %d IMPACTO %ld RACHA %d INICIO %d\n",
+               i + 1, eventosFila[i], impactoFila[i], rachaMax[i], inicioRacha[i]);
+    }
+
+    printf("COLUMNAS");
+    for (j = 0; j < M; j++) {
+        printf(" %d", eventosColumna[j]);
+    }
+    printf("\n");
+
+    if (totalEventos == 0) {
+        printf("PRIORIDAD 0\n");
+        printf("COLUMNA 0\n");
+    } else {
+        printf("PRIORIDAD %d\n", filaPrioritaria + 1);
+        printf("COLUMNA %d\n", columnaDestacada + 1);
+    }
+
+    return 0;
+}
