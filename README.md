@@ -32,6 +32,3 @@ gcc -std=c11 -Wall -Wextra 20260267.c -o reto
 
 La salida del programa no contiene preguntas ni mensajes adicionales, porque debe coincidir exactamente con los archivos `.out`.
 
-## Nota sobre caso 09
-
-En los archivos recibidos estaba `caso_09.out`, pero no el `caso_09.in` original. Para verificar la validación de dimensión cero se creó `pruebas/caso_09_equivalente.in` con una entrada equivalente. No se presenta como el archivo original del profesor.
