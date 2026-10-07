@@ -129,4 +129,3 @@ PRIORIDAD 1
 COLUMNA 2
 ```
 
-Justificación: existen dos rachas de longitud 2: columnas 2-3 y columnas 5-6. Como ambas tienen la misma longitud, se debe conservar la primera, cuyo inicio es la columna 2.
