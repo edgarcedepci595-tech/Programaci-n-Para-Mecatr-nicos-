@@ -1,0 +1,19 @@
+Caso 01: PASS
+Caso 02: PASS
+Caso 03: PASS
+Caso 04: PASS
+Caso 05: PASS
+Caso 06: PASS
+Caso 07: PASS
+Caso 08: PASS
+Caso 10: PASS
+Caso 11: PASS
+Caso 12: PASS
+Caso 13: PASS
+Caso 14: PASS
+Caso 15: PASS
+Caso 16: PASS
+Caso 17: PASS
+Caso 09 equivalente: PASS
+Prueba propia 01: PASS
+Prueba propia 02: PASS

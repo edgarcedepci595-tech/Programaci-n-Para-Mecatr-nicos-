@@ -1,0 +1,32 @@
+REPOSITORIO:
+https://github.com/edgarcedepci595-tech/Programaci-n-Para-Mecatr-nicos-.git
+
+Si vas a trabajar desde una carpeta nueva:
+
+git clone https://github.com/edgarcedepci595-tech/Programaci-n-Para-Mecatr-nicos-.git
+cd Programaci-n-Para-Mecatr-nicos-
+
+Copia dentro de esa carpeta los archivos de esta entrega.
+
+Luego registra la entrega en varios commits claros:
+
+git add 20260267.c
+git commit -m "Agrega solucion del Reto 15 en C"
+git push origin main
+
+git add ANALISIS_Y_DISENO.md
+git commit -m "Agrega analisis y diseno del algoritmo"
+git push origin main
+
+git add pruebas/ pruebas_propias/ PRUEBAS_Y_EVIDENCIAS.md
+git commit -m "Agrega casos de prueba y evidencias"
+git push origin main
+
+git add README.md GUIA_EXPLICACION_ORAL.md
+git commit -m "Agrega documentacion final del Reto 15"
+git push origin main
+
+IMPORTANTE:
+- Si tu rama principal se llama master y no main, cambia main por master.
+- No uses git push --force.
+- Antes de cada push puedes ejecutar: git status
