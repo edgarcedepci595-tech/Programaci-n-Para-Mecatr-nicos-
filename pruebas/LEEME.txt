@@ -1,0 +1,19 @@
+caso_01.in / caso_01.out: Ejemplo explicado
+caso_02.in / caso_02.out: Dimensión mínima: 1 x 1
+caso_03.in / caso_03.out: Igualdad con límites y meseta
+caso_04.in / caso_04.out: Una fila, cambios y valores extremos
+caso_05.in / caso_05.out: Una columna, comparación entre filas
+caso_06.in / caso_06.out: Empates, rachas separadas y final de fila
+caso_07.in / caso_07.out: Límites: debajo, igual y encima
+caso_08.in / caso_08.out: Matriz máxima 30 x 30
+caso_09.in / caso_09.out: Dimensión inválida: cero
+caso_10.in / caso_10.out: Dimensión inválida: más de 30
+caso_11.in / caso_11.out: Límites invertidos
+caso_12.in / caso_12.out: Límite fuera de rango
+caso_13.in / caso_13.out: Matriz con valor negativo
+caso_14.in / caso_14.out: Matriz con valor mayor que 1000
+caso_15.in / caso_15.out: Límite superior inválido
+caso_16.in / caso_16.out: Eventos activos de la regla particular
+caso_17.in / caso_17.out: Ausencia total de eventos
+
+Entrada y salida en UTF-8. Un caso por ejecución. Los archivos .out contienen solamente la salida esperada.
